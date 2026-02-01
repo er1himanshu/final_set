@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import ResultsTable from "../components/ResultsTable";
 import { fetchResults } from "../api/client";
+import AnimatedGradient from "../components/AnimatedGradient";
 
 export default function Results() {
   const [results, setResults] = useState([]);
@@ -31,8 +32,10 @@ export default function Results() {
     : 0;
 
   return (
-    <div className="min-h-screen bg-slate-50">
-      <Navbar />
+    <div className="min-h-screen bg-slate-50 relative">
+      <AnimatedGradient />
+      <div className="relative z-10">
+        <Navbar />
       
       <div className="max-w-7xl mx-auto px-6 py-12">
         {/* Header */}
@@ -119,6 +122,7 @@ export default function Results() {
             <ResultsTable results={results} />
           </div>
         )}
+      </div>
       </div>
     </div>
   );

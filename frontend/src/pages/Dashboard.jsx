@@ -1,10 +1,13 @@
 import Navbar from "../components/Navbar";
 import UploadForm from "../components/UploadForm";
+import AnimatedGradient from "../components/AnimatedGradient";
 
 export default function Dashboard() {
   return (
-    <div className="min-h-screen bg-slate-50">
-      <Navbar />
+    <div className="min-h-screen bg-slate-50 relative">
+      <AnimatedGradient />
+      <div className="relative z-10">
+        <Navbar />
       
       {/* Hero Section - Professional Tech Style */}
       <div className="relative bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white overflow-hidden">
@@ -139,6 +142,7 @@ export default function Dashboard() {
         <div className="animate-fade-in-up" style={{animationDelay: '0.4s'}}>
           <UploadForm />
         </div>
+      </div>
       </div>
     </div>
   );
