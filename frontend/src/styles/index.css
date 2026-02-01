@@ -21,20 +21,51 @@
     @apply relative overflow-hidden bg-gradient-to-r from-primary-600 via-primary-700 to-primary-800 text-white px-8 py-3.5 rounded-lg font-semibold hover:shadow-xl disabled:from-slate-400 disabled:to-slate-500 disabled:cursor-not-allowed transition-all duration-300 shadow-lg;
   }
   
+  .btn-primary::before {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 translate-x-[-200%] transition-transform duration-700;
+  }
+  
+  .btn-primary:hover:not(:disabled)::before {
+    @apply translate-x-[200%];
+  }
+  
   .btn-primary:hover:not(:disabled) {
-    @apply shadow-xl transform -translate-y-0.5;
+    @apply shadow-2xl shadow-primary-500/50 transform -translate-y-0.5 scale-105;
   }
   
   .btn-primary:active:not(:disabled) {
-    @apply transform translate-y-0;
+    @apply transform translate-y-0 scale-100;
   }
   
   .btn-secondary {
-    @apply bg-white text-slate-700 px-8 py-3.5 rounded-lg font-semibold border-2 border-slate-300 hover:border-primary-500 hover:text-primary-700 hover:bg-primary-50 transition-all duration-300 shadow-sm hover:shadow-md;
+    @apply bg-white text-slate-700 px-8 py-3.5 rounded-lg font-semibold border-2 border-slate-300 hover:border-primary-500 hover:text-primary-700 hover:bg-primary-50 transition-all duration-300 shadow-sm hover:shadow-md relative overflow-hidden;
+  }
+  
+  .btn-secondary::before {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-r from-primary-50 to-accent-50 opacity-0 transition-opacity duration-300;
+  }
+  
+  .btn-secondary:hover::before {
+    @apply opacity-100;
   }
   
   .card {
-    @apply bg-white rounded-xl shadow-medium hover:shadow-strong transition-all duration-300 border border-slate-100;
+    @apply bg-white rounded-xl shadow-medium hover:shadow-strong transition-all duration-300 border border-slate-100 relative overflow-hidden;
+  }
+  
+  .card::before {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-br from-primary-50/50 via-transparent to-accent-50/50 opacity-0 transition-opacity duration-500;
+  }
+  
+  .card:hover::before {
+    @apply opacity-100;
+  }
+  
+  .card:hover {
+    @apply -translate-y-1;
   }
   
   .card-glass {
@@ -42,11 +73,20 @@
   }
   
   .card-header {
-    @apply bg-gradient-to-br from-slate-800 via-slate-700 to-slate-900 px-8 py-6 rounded-t-xl border-b border-slate-700;
+    @apply bg-gradient-to-br from-slate-800 via-slate-700 to-slate-900 px-8 py-6 rounded-t-xl border-b border-slate-700 relative overflow-hidden;
+  }
+  
+  .card-header::before {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-r from-primary-600/20 via-transparent to-accent-600/20 opacity-50;
   }
   
   .input-field {
     @apply w-full px-4 py-3 border-2 border-slate-200 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all duration-200 bg-white;
+  }
+  
+  .input-field:focus {
+    @apply shadow-lg shadow-primary-100;
   }
   
   .badge-success {

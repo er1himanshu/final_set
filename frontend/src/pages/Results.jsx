@@ -49,14 +49,15 @@ export default function Results() {
         {/* Statistics Cards */}
         {!loading && !error && results.length > 0 && (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10 animate-fade-in-up" style={{animationDelay: '0.1s'}}>
-            <div className="card p-6 border-l-4 border-primary-600 hover:shadow-xl transition-all duration-300">
-              <div className="flex items-center justify-between">
+            <div className="card p-6 border-l-4 border-primary-600 hover:shadow-xl transition-all duration-300 group relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-primary-100 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <div className="flex items-center justify-between relative z-10">
                 <div>
                   <p className="text-slate-600 text-xs font-bold uppercase tracking-wider mb-1">Total Analyzed</p>
-                  <p className="text-4xl font-bold text-slate-900 mt-1">{results.length}</p>
+                  <p className="text-4xl font-bold text-slate-900 mt-1 group-hover:scale-110 transition-transform duration-300">{results.length}</p>
                   <p className="text-sm text-slate-500 mt-2">Images processed</p>
                 </div>
-                <div className="w-14 h-14 bg-gradient-to-br from-primary-500 to-primary-600 rounded-lg flex items-center justify-center shadow-lg">
+                <div className="w-14 h-14 bg-gradient-to-br from-primary-500 to-primary-600 rounded-lg flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:rotate-12 transition-all duration-300">
                   <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                   </svg>
@@ -64,14 +65,15 @@ export default function Results() {
               </div>
             </div>
 
-            <div className="card p-6 border-l-4 border-success-600 hover:shadow-xl transition-all duration-300">
-              <div className="flex items-center justify-between">
+            <div className="card p-6 border-l-4 border-success-600 hover:shadow-xl transition-all duration-300 group relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-success-100 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <div className="flex items-center justify-between relative z-10">
                 <div>
                   <p className="text-slate-600 text-xs font-bold uppercase tracking-wider mb-1">Passed Quality</p>
-                  <p className="text-4xl font-bold text-success-600 mt-1">{passedCount}</p>
+                  <p className="text-4xl font-bold text-success-600 mt-1 group-hover:scale-110 transition-transform duration-300">{passedCount}</p>
                   <p className="text-sm text-slate-500 mt-2">{results.length > 0 ? ((passedCount / results.length) * 100).toFixed(1) : 0}% success rate</p>
                 </div>
-                <div className="w-14 h-14 bg-gradient-to-br from-success-500 to-success-600 rounded-lg flex items-center justify-center shadow-lg">
+                <div className="w-14 h-14 bg-gradient-to-br from-success-500 to-success-600 rounded-lg flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:rotate-12 transition-all duration-300">
                   <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
@@ -79,14 +81,15 @@ export default function Results() {
               </div>
             </div>
 
-            <div className="card p-6 border-l-4 border-danger-600 hover:shadow-xl transition-all duration-300">
-              <div className="flex items-center justify-between">
+            <div className="card p-6 border-l-4 border-danger-600 hover:shadow-xl transition-all duration-300 group relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-danger-100 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <div className="flex items-center justify-between relative z-10">
                 <div>
                   <p className="text-slate-600 text-xs font-bold uppercase tracking-wider mb-1">Need Improvement</p>
-                  <p className="text-4xl font-bold text-danger-600 mt-1">{failedCount}</p>
+                  <p className="text-4xl font-bold text-danger-600 mt-1 group-hover:scale-110 transition-transform duration-300">{failedCount}</p>
                   <p className="text-sm text-slate-500 mt-2">{results.length > 0 ? ((failedCount / results.length) * 100).toFixed(1) : 0}% need attention</p>
                 </div>
-                <div className="w-14 h-14 bg-gradient-to-br from-danger-500 to-danger-600 rounded-lg flex items-center justify-center shadow-lg">
+                <div className="w-14 h-14 bg-gradient-to-br from-danger-500 to-danger-600 rounded-lg flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:rotate-12 transition-all duration-300">
                   <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                   </svg>
