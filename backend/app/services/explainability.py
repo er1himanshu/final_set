@@ -130,7 +130,7 @@ def encode_image_to_base64(image: Image.Image, format: str = "PNG") -> str:
     return base64.b64encode(img_bytes).decode('utf-8')
 
 
-def generate_gradient_heatmap(image_path: str, alpha: float = 0.3) -> Image.Image:
+def generate_gradient_heatmap(image: Image.Image, alpha: float = 0.3) -> Image.Image:
     """
     Generate a simple gradient heatmap as a fallback visualization.
     
@@ -138,15 +138,17 @@ def generate_gradient_heatmap(image_path: str, alpha: float = 0.3) -> Image.Imag
     importance pattern when full attention rollout is unavailable.
     
     Args:
-        image_path: Path to the original image
+        image: PIL Image object (already loaded)
         alpha: Transparency of gradient overlay (0=transparent, 1=opaque)
     
     Returns:
         PIL.Image: Image with gradient overlay
     """
-    # Load original image
-    original_img = Image.open(image_path).convert("RGB")
-    img_array = np.array(original_img)
+    # Convert to RGB if needed
+    if image.mode != "RGB":
+        image = image.convert("RGB")
+    
+    img_array = np.array(image)
     h, w = img_array.shape[:2]
     
     # Create radial gradient (center-focused)
@@ -209,10 +211,13 @@ def generate_fallback_explanation(
     else:
         message = f"Match confirmed (score: {similarity_score:.2f})"
     
+    # Load image once for efficiency
+    original_img = Image.open(image_path).convert("RGB")
+    
     # Generate fallback visualization based on config
     if FALLBACK_HEATMAP_TYPE == "gradient":
         # Create a simple gradient heatmap
-        heatmap_image = generate_gradient_heatmap(image_path, alpha=0.3)
+        heatmap_image = generate_gradient_heatmap(original_img, alpha=0.3)
         explanation = (
             "Showing simplified center-focused attention pattern. "
             "Full attention rollout visualization is unavailable because: " + fallback_reason + ". "
@@ -220,7 +225,6 @@ def generate_fallback_explanation(
         )
     else:
         # Return original image
-        original_img = Image.open(image_path).convert("RGB")
         heatmap_image = original_img
         explanation = (
             "Showing original image. Full attention heatmap is unavailable because: " + fallback_reason + ". "
@@ -404,8 +408,10 @@ def generate_clip_explanation(
                 "is_fallback": False  # Full attention visualization available
             }
             
-        except Exception as e:
+        except (RuntimeError, ValueError, IndexError, AttributeError) as e:
             # Error during attention processing - use fallback
+            # RuntimeError: tensor operations, ValueError: invalid data, 
+            # IndexError: out of bounds, AttributeError: missing attributes
             logger.warning(f"Error processing attention tensors: {type(e).__name__}: {str(e)}")
             
             if ENABLE_ATTENTION_FALLBACK:
