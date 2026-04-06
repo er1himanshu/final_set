@@ -1,6 +1,6 @@
 # AI-Powered Ecommerce Product Listing Evaluator
 
-A full-stack application for analyzing product images with comprehensive AI-powered quality metrics specifically designed for ecommerce marketplaces. Ensure your product images meet professional standards with instant feedback and actionable suggestions.
+A full-stack application for analyzing product images with comprehensive AI-powered quality metrics specifically designed for ecommerce marketplaces. Ensure your product images meet professional standards before listing.
 
 ## 🌟 Features
 
@@ -40,8 +40,8 @@ A full-stack application for analyzing product images with comprehensive AI-powe
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/er1himanshu/set_project_57.git
-cd set_project_57
+git clone https://github.com/er1himanshu/final_set.git
+cd final_set
 ```
 
 ### 2. Backend Setup (FastAPI)
@@ -173,7 +173,7 @@ Response:
 }
 ```
 
-**This endpoint** generates a visual explanation using CLIP attention rollout, showing which parts of the image most influenced the similarity score between the image and description. The heatmap overlay uses warmer colors (red/yellow) to indicate regions of higher attention, and cooler colors (blue) for lower attention. The returned `heatmap_base64` is a base64-encoded PNG image that can be displayed directly in the browser.
+**This endpoint** generates a visual explanation using CLIP attention rollout, showing which parts of the image most influenced the similarity score between the image and description. The heatmap can be rendered directly in the frontend using a `data:image/png;base64,...` URL.
 
 **Requirements**: This feature requires the CLIP model to be available locally. If the model is not accessible, the endpoint returns a 503 error.
 
@@ -215,7 +215,6 @@ Images are evaluated against the following ecommerce standards:
 | **🆕 Image-Text Match** | ≥ 0.25 | CLIP similarity score (0-1) |
 
 ### Response Schema
-
 ```json
 {
   "id": 1,
@@ -242,45 +241,46 @@ Images are evaluated against the following ecommerce standards:
 
 ## 🏗️ Project Structure
 
-```
-set_project_57/
+```text
+final_set/
 ├── backend/
 │   ├── app/
-│   │   ├── main.py              # FastAPI application entry point
-│   │   ├── models.py            # SQLAlchemy database models
-│   │   ├── schemas.py           # Pydantic validation schemas
-│   │   ├── config.py            # Configuration and thresholds
-│   │   ├── database.py          # Database setup and connection
+│   │   ├── main.py                   # FastAPI application entry point
+│   │   ├── models.py                 # SQLAlchemy database models
+│   │   ├── schemas.py                # Pydantic validation schemas
+│   │   ├── config.py                 # Configuration and thresholds
+│   │   ├── database.py               # Database setup and connection
 │   │   ├── routes/
-│   │   │   ├── upload.py        # Image upload endpoint
-│   │   │   ├── analyze.py       # Analysis endpoint
-│   │   │   ├── mismatch.py      # 🆕 Mismatch detection endpoint
-│   │   │   ├── explain.py       # 🆕 CLIP explainability endpoint
-│   │   │   └── results.py       # Results retrieval endpoints
+│   │   │   ├── upload.py             # Image upload endpoint
+│   │   │   ├── analyze.py            # Analysis endpoint
+│   │   │   ├── mismatch.py           # 🆕 Mismatch detection endpoint
+│   │   │   ├── explain.py            # 🆕 CLIP explainability endpoint
+│   │   │   └── results.py            # Results retrieval endpoints
 │   │   └── services/
-│   │       ├── image_quality.py # Image analysis logic
-│   │       ├── mismatch_detector.py # 🆕 CLIP-based mismatch detection
-│   │       ├── explainability.py # 🆕 CLIP attention rollout & visualization
-│   │       └── storage.py       # File storage management
-│   ├── requirements.txt         # Python dependencies
-│   └── uploads/                 # Uploaded images (auto-created)
+│   │       ├── image_quality.py      # Image analysis logic
+│   │       ├── mismatch_detector.py  # 🆕 CLIP-based mismatch detection
+│   │       ├── explainability.py     # 🆕 CLIP attention rollout & visualization
+│   │       └── storage.py            # File storage management
+│   ├── requirements.txt              # Python dependencies
+│   └── uploads/                      # Uploaded images (auto-created)
 ├── frontend/
 │   ├── src/
 │   │   ├── pages/
-│   │   │   ├── Dashboard.jsx    # Home page with upload
-│   │   │   └── Results.jsx      # Results listing page
+│   │   │   ├── Dashboard.jsx         # Home page with upload
+│   │   │   └── Results.jsx           # Results listing page
 │   │   ├── components/
-│   │   │   ├── Navbar.jsx       # Navigation component
-│   │   │   ├── UploadForm.jsx   # Upload and analysis UI
-│   │   │   └── ResultsTable.jsx # Results display table
+│   │   │   ├── Navbar.jsx            # Navigation component
+│   │   │   ├── UploadForm.jsx        # Upload and analysis UI
+│   │   │   └── ResultsTable.jsx      # Results display table
 │   │   ├── api/
-│   │   │   └── client.js        # API client
-│   │   ├── App.jsx              # Main app component
-│   │   └── main.jsx             # Entry point
-│   ├── index.html               # HTML template
-│   ├── package.json             # Node dependencies
-│   └── tailwind.config.js       # Tailwind CSS config
-└── README.md                    # This file
+│   │   │   └── client.js             # API client
+│   │   ├── App.jsx                   # Main app component
+│   │   └── main.jsx                  # Entry point
+│   ├── index.html                    # HTML template
+│   ├── package.json                  # Node dependencies
+│   └── tailwind.config.js            # Tailwind CSS config
+├── requirements.txt                  # Root-level Python dependencies (if used)
+└── README.md                         # This file
 ```
 
 ## 🔧 Configuration
@@ -303,7 +303,7 @@ MISMATCH_THRESHOLD = 0.25     # Similarity threshold (0-1, lower = stricter)
 CLIP_MODEL_NAME = "openai/clip-vit-base-patch32"  # CLIP model to use
 ```
 
-**Note**: The image-text mismatch detection feature requires the CLIP model to be available locally. If the model is not cached and cannot be downloaded (e.g., in offline/sandboxed environments), the feature will be gracefully skipped and uploads will continue successfully without mismatch detection. The image quality analysis will still be performed normally.
+**Note**: The image-text mismatch detection feature requires the CLIP model to be available locally. If the model is not cached and cannot be downloaded (e.g., in offline/sandboxed environments), mismatch and explainability features may fail.
 
 ### Frontend Configuration
 
@@ -318,7 +318,7 @@ const API = axios.create({
 ## 🎨 Visual Design Features
 
 ### Dynamic Animated Backgrounds
-The application features smooth, floating gradient orbs that create an engaging and modern visual experience without compromising performance. These animations are implemented using CSS keyframes and are GPU-accelerated for optimal performance.
+The application features smooth, floating gradient orbs that create an engaging and modern visual experience without compromising performance. These animations are implemented using CSS keyframes and optimized compositing.
 
 ### Advanced Interactions
 - **Button Hover Effects**: Shimmer animations and smooth scale transitions
